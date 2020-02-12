@@ -1,9 +1,13 @@
 package com.alfonsotienda.holaspring.controller;
 
+import com.alfonsotienda.holaspring.model.Factura;
+import com.alfonsotienda.holaspring.repositorio.FacturaRepositorio;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import org.aspectj.apache.bcel.classfile.Module.Require;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +29,44 @@ public class MainController {
         return "Hola " + name + " tienes " + edad + "años";
     }
 
-    @GetMapping("/ingles")
+/*****************************************************************************************
+ * controller para el objeto factura
+ * @param fecha
+ * @param id
+ * @param total
+ *  usar @GeneratedValue, @Max/@Min, @NotNull, @Size
+ * 
+ * usar repository.findall()
+ **********************************************/
+    @Autowired
+    FacturaRepositorio facturaRepositorio;      //autogenera un objeto repositorio
+
+    @GetMapping("/creafactura")
     @ResponseBody
-    public String helloWorld() {
-        return "Hello World";
+    public ResponseEntity creafactura(
+                    @RequestParam("fecha") String fecha,
+                    @RequestParam("id") Integer id,
+                    @RequestParam("total") Double total
+    ) {
+        Factura factura=new Factura(fecha, id, total);
+
+        facturaRepositorio.save(factura);
+
+        ResponseEntity responseEntity=new ResponseEntity<>(HttpStatus.CREATED);
+
+
+
+        return responseEntity;
     }
+
+    
+
+/******************************************************************************
+ * 
+ * @return
+ */
+
+
 
     @GetMapping("/calculadora")
     public ModelAndView calculadoraHTML() {
