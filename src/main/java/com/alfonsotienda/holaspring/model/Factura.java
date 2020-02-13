@@ -27,18 +27,18 @@ public class Factura {
     @NotNull
     private Double total;
 
+    
 
     public Factura() {
     }
 
-    //Versión con objeto cliente como atributo
-    public Factura(String fecha, Cliente cliente, String concepto, Double total) {
+    public Factura(@NotNull String fecha, @NotNull Cliente cliente, @NotNull String concepto, @NotNull Double total) {
         this.fecha = fecha;
         this.cliente = cliente;
         this.concepto = concepto;
         this.total = total;
     }
-    //Versión con cliente String
+    
 /*     public Factura(String fecha, String cliente, String concepto, Double total) {
         this.fecha = fecha;
         this.cliente=cliente;

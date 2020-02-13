@@ -100,7 +100,10 @@ public class MainController {
         ModelAndView modelAndView=new ModelAndView("listaCli");
         modelAndView.addObject("clientes", clienteRepositorio.findAll());
         return modelAndView;
+<<<<<<< HEAD
     }     */
+
+    
 
 
 
