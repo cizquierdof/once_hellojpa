@@ -4,12 +4,8 @@ import com.alfonsotienda.holaspring.model.Cliente;
 import com.alfonsotienda.holaspring.model.Factura;
 import com.alfonsotienda.holaspring.repositorio.ClienteRepositorio;
 import com.alfonsotienda.holaspring.repositorio.FacturaRepositorio;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
-import org.aspectj.apache.bcel.classfile.Module.Require;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import ch.qos.logback.core.status.Status;
 
 /**
  * MainController
@@ -27,12 +22,6 @@ import ch.qos.logback.core.status.Status;
 
 @Controller
 public class MainController {
-
-    @GetMapping("/")
-    @ResponseBody
-    public String holaMundo(@RequestParam("nombre") String name, @RequestParam("edad") Integer edad) {
-        return "Hola " + name + " tienes " + edad + "años";
-    }
 
 /*****************************************************************************************
  * controller para el objeto factura
@@ -46,6 +35,9 @@ public class MainController {
     @Autowired
     FacturaRepositorio facturaRepositorio;      //autogenera un objeto repositorio
 
+    @Autowired
+    ClienteRepositorio clienteRepositorio;      //autogenera un objeto repositorio
+
     @GetMapping("/factura")
     @ResponseBody
     public ModelAndView creafactura() {
@@ -58,7 +50,7 @@ public class MainController {
     @PostMapping("/factura")
     public ModelAndView facturaPost(
         @RequestParam("fecha") String fecha,
-        @RequestParam("cliente") String cliente,
+        @RequestParam("cliente") Cliente cliente,
         @RequestParam("concepto") String concepto,
         @RequestParam("total") Double total
     ){
@@ -69,8 +61,6 @@ public class MainController {
         return modelAndView;
     }
     
-    @Autowired
-    ClienteRepositorio clienteRepositorio;      //autogenera un objeto repositorio
 
     @GetMapping("/cliente")
     @ResponseBody
@@ -78,6 +68,9 @@ public class MainController {
 
         ModelAndView modelAndView=new ModelAndView("cliente");
         modelAndView.addObject("mensaje", "");
+        modelAndView.addObject("clientes", clienteRepositorio.findAll());
+        
+
         return modelAndView;
     }
 
@@ -90,17 +83,28 @@ public class MainController {
         ModelAndView modelAndView=new ModelAndView("cliente");
         Cliente cliente=new Cliente(nombre, apellido, edad);
         clienteRepositorio.save(cliente);
+        modelAndView.addObject("clientes", clienteRepositorio.findAll());
+
 
         return modelAndView;
     }
 
-    @GetMapping("lista")
+    /*@GetMapping("lista")
     public String showListaClientes(Model model){
         model.addAttribute("clientes", clienteRepositorio.findAll());
         return "listaCli";
-    }    
+    }  */  
+
+/*     @GetMapping("lista")
+    public ModelAndView showListaClientes(Model model){
+        ModelAndView modelAndView=new ModelAndView("listaCli");
+        modelAndView.addObject("clientes", clienteRepositorio.findAll());
+        return modelAndView;
+    }     */
 
 
+
+    
 /******************************************************************************
  * 
  * @return

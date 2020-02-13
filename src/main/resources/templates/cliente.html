@@ -6,10 +6,37 @@
     <title>Nuevo cliente</title>
     <style>
         div{
-            width: max-content;
+            width:300px;
             text-align: right;
+            padding-bottom: 10px;
             }
-        input{width: 160px;}
+        input{
+            width: 160px;
+            
+            }
+        #enviar{
+            width: 80px;
+            background-color: gray;
+            color: white;
+
+            }
+        table{
+            width: 100%;
+        }
+        th{
+           
+            border: 2px groove rgba(73,108,155,0.87);
+            background-color: gray;
+            color: white;
+            padding: 5px;
+            text-align: center;
+            }
+        td{
+            border-collapse: collapse;
+            text-align: center;
+            border: 1px groove gray;
+        }
+
     </style>
 </head>
 <body>
@@ -27,12 +54,30 @@
             <li>
                 <label>edad: <input type="text" name="edad"></label>
             </li>
-
-          
         </ul>
-        <input type="submit">
-        </div>   
+        <input id="enviar" type="submit">
+        </div> 
+        <div>
+            <table id="list">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>edad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cliente : ${clientes}">
+                        <td th:text="${cliente.nombre}"></td>
+                        <td th:text="${cliente.apellido}"></td>
+                        <td th:text="${cliente.edad}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>  
     </form>
+
+
     
 </body>
 </html>

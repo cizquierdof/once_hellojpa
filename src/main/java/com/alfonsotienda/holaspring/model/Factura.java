@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -18,21 +19,32 @@ public class Factura {
     @NotNull
     private String fecha;
     @NotNull
-    private String cliente;
+    @ManyToOne
+    //private String cliente;
+    private Cliente cliente;
     @NotNull
     private String concepto;
     @NotNull
     private Double total;
 
+
     public Factura() {
     }
 
-    public Factura(String fecha, String cliente, String concepto, Double total) {
+    //Versión con objeto cliente como atributo
+    public Factura(String fecha, Cliente cliente, String concepto, Double total) {
+        this.fecha = fecha;
+        this.cliente = cliente;
+        this.concepto = concepto;
+        this.total = total;
+    }
+    //Versión con cliente String
+/*     public Factura(String fecha, String cliente, String concepto, Double total) {
         this.fecha = fecha;
         this.cliente=cliente;
         this.concepto=concepto;
         this.total = total;
-    }
+    } */
 
     public Integer getId() {
         return id;
@@ -54,13 +66,13 @@ public class Factura {
         return concepto;
     }
 
-    public String getCliente() {
+/*     public String getCliente() {
         return cliente;
     }
 
     public void setCliente(String cliente) {
         this.cliente = cliente;
-    }
+    } */
 
     public void setConcepto(String concepto) {
         this.concepto = concepto;
@@ -73,5 +85,15 @@ public class Factura {
     public void setTotal(Double total) {
         this.total = total;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+
     
 }
