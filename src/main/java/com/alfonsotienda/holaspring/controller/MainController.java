@@ -1,6 +1,8 @@
 package com.alfonsotienda.holaspring.controller;
 
+import com.alfonsotienda.holaspring.model.Cliente;
 import com.alfonsotienda.holaspring.model.Factura;
+import com.alfonsotienda.holaspring.repositorio.ClienteRepositorio;
 import com.alfonsotienda.holaspring.repositorio.FacturaRepositorio;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
@@ -10,11 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import ch.qos.logback.core.status.Status;
 
 /**
  * MainController
@@ -41,25 +46,60 @@ public class MainController {
     @Autowired
     FacturaRepositorio facturaRepositorio;      //autogenera un objeto repositorio
 
-    @GetMapping("/creafactura")
+    @GetMapping("/factura")
     @ResponseBody
-    public ResponseEntity creafactura(
-                    @RequestParam("fecha") String fecha,
-                    @RequestParam("id") Integer id,
-                    @RequestParam("total") Double total
-    ) {
-        Factura factura=new Factura(fecha, id, total);
+    public ModelAndView creafactura() {
 
-        facturaRepositorio.save(factura);
-
-        ResponseEntity responseEntity=new ResponseEntity<>(HttpStatus.CREATED);
-
-
-
-        return responseEntity;
+        ModelAndView modelAndView=new ModelAndView("factura");
+        modelAndView.addObject("mensaje", "");
+        return modelAndView;
     }
 
+    @PostMapping("/factura")
+    public ModelAndView facturaPost(
+        @RequestParam("fecha") String fecha,
+        @RequestParam("cliente") String cliente,
+        @RequestParam("concepto") String concepto,
+        @RequestParam("total") Double total
+    ){
+        ModelAndView modelAndView=new ModelAndView("factura");
+        Factura factura=new Factura(fecha, cliente, concepto, total);
+        facturaRepositorio.save(factura);
+
+        return modelAndView;
+    }
     
+    @Autowired
+    ClienteRepositorio clienteRepositorio;      //autogenera un objeto repositorio
+
+    @GetMapping("/cliente")
+    @ResponseBody
+    public ModelAndView creaCliente() {
+
+        ModelAndView modelAndView=new ModelAndView("cliente");
+        modelAndView.addObject("mensaje", "");
+        return modelAndView;
+    }
+
+    @PostMapping("/cliente")
+    public ModelAndView clientePost(
+        @RequestParam("nombre") String nombre,
+        @RequestParam("apellido") String apellido,
+        @RequestParam("edad") Integer edad
+    ){
+        ModelAndView modelAndView=new ModelAndView("cliente");
+        Cliente cliente=new Cliente(nombre, apellido, edad);
+        clienteRepositorio.save(cliente);
+
+        return modelAndView;
+    }
+
+    @GetMapping("lista")
+    public String showListaClientes(Model model){
+        model.addAttribute("clientes", clienteRepositorio.findAll());
+        return "listaCli";
+    }    
+
 
 /******************************************************************************
  * 
@@ -76,9 +116,11 @@ public class MainController {
     }
 
     @PostMapping("/calculadora")
-    public ModelAndView calculadoraHTMLPost(@RequestParam("operando1") Integer operando1,
-            @RequestParam(value = "operando2", required = false) Integer operando2,
-            @RequestParam("operacion") String operacion) {
+    public ModelAndView calculadoraHTMLPost(
+        @RequestParam("operando1") Integer operando1,
+        @RequestParam(value = "operando2", required = false) Integer operando2,
+        @RequestParam("operacion") String operacion
+        ) {
 
         ModelAndView modelAndView = new ModelAndView("hello");
 
@@ -130,8 +172,11 @@ public class MainController {
     JdbcTemplate jdbcTemplate;
 
     @PostMapping("/insertar")
-    public ModelAndView insertarHTMLPost(@RequestParam("nombre") String nombre,
-            @RequestParam("apellidos") String apellidos, @RequestParam("edad") String edad) {
+    public ModelAndView insertarHTMLPost(
+            @RequestParam("nombre") String nombre,
+            @RequestParam("apellidos") String apellidos, 
+            @RequestParam("edad") String edad
+            ) {
 
         ModelAndView modelAndView = new ModelAndView("insertar");
 

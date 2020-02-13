@@ -4,20 +4,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
-class Cliente {
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @NotNull
     private String nombre;
+    @NotNull
     private String apellido;
-    @Size(min = 16, max = 65)
+    @NotNull
+    @Min(value = 16)    //limita edad a más de 15
+    @Max(value = 65)    //y menos de 65 saltará error 500
     private Integer edad;
 
     public Cliente() {

@@ -4,25 +4,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  * Factura
  */
-@Entity //si el objeto no existe en la base de datos la crea
+@Entity // si el objeto no existe en la base de datos la crea
 public class Factura {
 
-    @Id 
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @NotNull
     private String fecha;
+    @NotNull
+    private String cliente;
+    @NotNull
+    private String concepto;
+    @NotNull
     private Double total;
 
     public Factura() {
     }
 
-    public Factura(String fecha,Integer id ,Double total) {
-        this.id=id;
+    public Factura(String fecha, String cliente, String concepto, Double total) {
         this.fecha = fecha;
+        this.cliente=cliente;
+        this.concepto=concepto;
         this.total = total;
     }
 
@@ -42,6 +50,22 @@ public class Factura {
         this.fecha = fecha;
     }
 
+    public String getConcepto() {
+        return concepto;
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
+
     public Double getTotal() {
         return total;
     }
@@ -49,12 +73,5 @@ public class Factura {
     public void setTotal(Double total) {
         this.total = total;
     }
-
-    @Override
-    public String toString() {
-        return "Factura [fecha=" + fecha + ", id=" + id + ", total=" + total + "]";
-    }
-
-
     
 }

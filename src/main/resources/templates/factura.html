@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva factura</title>
+    <style>
+        div{
+            width: max-content;
+            text-align: right;
+            }
+        input{width: 160px;}
+    </style>
+</head>
+<body>
+    <h1>Nueva factura</h1>
+    <p>Introduccir los datos de la nueva factura</p>
+    <form action="/factura" method="POST">
+        <div>
+        <ul style="list-style: none;">
+            <li>
+                <label>Fecha:   <input type="date" name="fecha"/></label> 
+            </li>
+            <li>
+                <label>Cliente: <input type="text" name="cliente"></label>
+            </li>
+            <li>
+                <label>Concepto: <input type="text" name="concepto"></label>
+            </li>
+
+            <li>
+                <label>Total: <input type="text" name="total"></label>
+            </li>
+          
+        </ul>
+        <input type="submit">
+        </div>   
+    </form>
+    
+</body>
+</html>
