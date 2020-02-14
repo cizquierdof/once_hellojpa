@@ -1,12 +1,17 @@
 package com.alfonsotienda.holaspring.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-
+import javax.persistence.JoinColumn;
 /**
  * Factura
  */
@@ -26,13 +31,21 @@ public class Factura {
     private String concepto;
     @NotNull
     private Double total;
-
     
+    @ManyToMany
+    @JoinTable(name = "linea_factura",
+    joinColumns = {
+            @JoinColumn(name = "factura_id", referencedColumnName = "id",
+                    nullable = false, updatable = false)},
+    inverseJoinColumns = {
+            @JoinColumn(name = "producto_id", referencedColumnName = "id",
+                    nullable = false, updatable = false)})
+    private Set<Productos> productos = new HashSet<>();
 
     public Factura() {
     }
 
-    public Factura(@NotNull String fecha, @NotNull Cliente cliente, @NotNull String concepto, @NotNull Double total) {
+    public Factura(String fecha,Cliente cliente,String concepto, Double total) {
         this.fecha = fecha;
         this.cliente = cliente;
         this.concepto = concepto;
@@ -93,6 +106,18 @@ public class Factura {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public Set<Productos> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(Set<Productos> productos) {
+        this.productos = productos;
+    }
+
+
+
+
 
 
     

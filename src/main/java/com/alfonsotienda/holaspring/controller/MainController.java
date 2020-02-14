@@ -4,11 +4,11 @@ import com.alfonsotienda.holaspring.model.Cliente;
 import com.alfonsotienda.holaspring.model.Factura;
 import com.alfonsotienda.holaspring.repositorio.ClienteRepositorio;
 import com.alfonsotienda.holaspring.repositorio.FacturaRepositorio;
+import com.alfonsotienda.holaspring.repositorio.ProductoRepositorio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,12 +38,15 @@ public class MainController {
     @Autowired
     ClienteRepositorio clienteRepositorio;      //autogenera un objeto repositorio
 
+    @Autowired
+    ProductoRepositorio productoRepositorio;
+    
     @GetMapping("/factura")
     @ResponseBody
     public ModelAndView creafactura() {
 
         ModelAndView modelAndView=new ModelAndView("factura");
-        modelAndView.addObject("mensaje", "");
+        //modelAndView.addObject("mensaje", "");
         return modelAndView;
     }
 
@@ -60,7 +63,6 @@ public class MainController {
 
         return modelAndView;
     }
-    
 
     @GetMapping("/cliente")
     @ResponseBody
@@ -70,7 +72,6 @@ public class MainController {
         modelAndView.addObject("mensaje", "");
         modelAndView.addObject("clientes", clienteRepositorio.findAll());
         
-
         return modelAndView;
     }
 
@@ -84,7 +85,6 @@ public class MainController {
         Cliente cliente=new Cliente(nombre, apellido, edad);
         clienteRepositorio.save(cliente);
         modelAndView.addObject("clientes", clienteRepositorio.findAll());
-
 
         return modelAndView;
     }
@@ -102,11 +102,6 @@ public class MainController {
         return modelAndView;
 <<<<<<< HEAD
     }     */
-
-    
-
-
-
     
 /******************************************************************************
  * 

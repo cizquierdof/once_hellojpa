@@ -1,9 +1,13 @@
 package com.alfonsotienda.holaspring.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  * Productos
@@ -17,6 +21,9 @@ public class Productos {
     private String nombre;
     private Double precio;
     private Double iva;
+
+    @ManyToMany(mappedBy = "productos")
+    private Set<Factura> students = new HashSet<>();
 
     public Productos() {
     }
@@ -57,6 +64,14 @@ public class Productos {
 
     public void setIva(Double iva) {
         this.iva = iva;
+    }
+
+    public Set<Factura> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Factura> students) {
+        this.students = students;
     }
     
     

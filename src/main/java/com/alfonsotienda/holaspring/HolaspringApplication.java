@@ -9,6 +9,7 @@ public class HolaspringApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HolaspringApplication.class, args);
+		
 	}
 
 }
