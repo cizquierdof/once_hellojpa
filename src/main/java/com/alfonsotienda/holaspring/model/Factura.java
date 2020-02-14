@@ -1,7 +1,11 @@
 package com.alfonsotienda.holaspring.model;
 
 import java.util.HashSet;
+<<<<<<< HEAD
 import java.util.Set;
+=======
+import java.util.*;
+>>>>>>> 14/02 modificaciones varias
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,10 +27,12 @@ public class Factura {
     private Integer id;
     @NotNull
     private String fecha;
+    
     @NotNull
     @ManyToOne
     //private String cliente;
     private Cliente cliente;
+
     @NotNull
     private String concepto;
     @NotNull
@@ -40,7 +46,7 @@ public class Factura {
     inverseJoinColumns = {
             @JoinColumn(name = "producto_id", referencedColumnName = "id",
                     nullable = false, updatable = false)})
-    private Set<Productos> productos = new HashSet<>();
+    private List<Producto> productos =new ArrayList<>();
 
     public Factura() {
     }
@@ -107,12 +113,14 @@ public class Factura {
         this.cliente = cliente;
     }
 
-    public Set<Productos> getProductos() {
-        return productos;
-    }
+	public List<Producto> getProductos() {
+		return productos;
+	}
 
-    public void setProductos(Set<Productos> productos) {
-        this.productos = productos;
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+    }
+    
     }
 
 
@@ -121,4 +129,3 @@ public class Factura {
 
 
     
-}

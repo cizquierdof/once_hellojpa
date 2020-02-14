@@ -1,7 +1,11 @@
 package com.alfonsotienda.holaspring.model;
 
+<<<<<<< HEAD:src/main/java/com/alfonsotienda/holaspring/model/Productos.java
 import java.util.HashSet;
 import java.util.Set;
+=======
+import java.util.*;
+>>>>>>> 14/02 modificaciones varias:src/main/java/com/alfonsotienda/holaspring/model/Producto.java
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +17,7 @@ import javax.persistence.ManyToMany;
  * Productos
  */
 @Entity
-public class Productos {
+public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,13 +26,20 @@ public class Productos {
     private Double precio;
     private Double iva;
 
+<<<<<<< HEAD:src/main/java/com/alfonsotienda/holaspring/model/Productos.java
     @ManyToMany(mappedBy = "productos")
     private Set<Factura> students = new HashSet<>();
 
     public Productos() {
+=======
+    @ManyToMany(mappedBy = "producto")
+    private List<Factura> facturas = new ArrayList<>();
+
+    public Producto() {
+>>>>>>> 14/02 modificaciones varias:src/main/java/com/alfonsotienda/holaspring/model/Producto.java
     }
 
-    public Productos(String nombre, Double precio, Double iva) {
+    public Producto(String nombre, Double precio, Double iva) {
         this.nombre = nombre;
         this.precio = precio;
         this.iva = iva;
@@ -66,6 +77,7 @@ public class Productos {
         this.iva = iva;
     }
 
+<<<<<<< HEAD:src/main/java/com/alfonsotienda/holaspring/model/Productos.java
     public Set<Factura> getStudents() {
         return students;
     }
@@ -73,6 +85,20 @@ public class Productos {
     public void setStudents(Set<Factura> students) {
         this.students = students;
     }
+=======
+	public List<Factura> getFacturas() {
+		return facturas;
+	}
+
+	public void setFacturas(List<Factura> facturas) {
+		this.facturas = facturas;
+	}
+/* 
+    public void adProducto(Producto p){
+        this.productos= p;
+
+    } */
+>>>>>>> 14/02 modificaciones varias:src/main/java/com/alfonsotienda/holaspring/model/Producto.java
     
     
     
